@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="icon" href="{% static 'myapp/images/img.jpg' %}">
+    <style>
+        #grad1 {
+            height: 400px;
+            top: 0;
+            background-image: linear-gradient(to bottom, rgba(84,180,211), rgba(255,0,0,0));
+        }
+        .back-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #17a2b8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .back-button:hover {
+            background-color: #138496;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div id="grad1">
+        <form method="post" action="{% url 'register' %}">
+            {% csrf_token %}
+            <div class="container">
+                <table align="center" cellpadding="10" cellspacing="5">
+                    <tr>
+                        <td><br><br></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="text">
+                                <h2><a href="#" style="color: white;">Registration page</a></h2>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="username"> Username: </label></td>
+                        <td><input type="text" id="username" name="username" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="mobileNo"> Mobile Number: </label></td>
+                        <td><input type="tel" id="mobileNo" name="mobile_no" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="consumerNo"> Consumer Number: </label></td>
+                        <td><input type="text" id="consumerNo" name="consumer_no" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="pwd"> Enter Password: </label></td>
+                        <td><input type="password" id="pwd" name="password" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="confirmPwd"> Confirm Password: </label></td>
+                        <td><input type="password" id="confirmPwd" name="confirm_password" required></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="submit" class="btn btn-info">Register</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+
+    <button class="back-button" onclick="goToLogin()">Back</button>
+
+    <script>
+        function goToLogin() {
+            window.location.href = "{% url 'login' %}";
+        }
+    </script>
+
+</body>
+</html>
