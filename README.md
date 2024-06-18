@@ -11,40 +11,40 @@ Here are **important commands and steps to be followed** which I used in differe
 1. Installing python and setting its path.<br />
 2. Installing pip<br />
    $ python -m pip install -U pip<br />
-3. Setting up Virtual Environment
-   $ pip install virtualenv      (to install virtual environment)
-   $ virtualenv my_env           (to create your own virtual environment)
-   $ cd my_env
-   $ Scripts\activate            (to activate your virtual environment)
-   (my_env)$ deactivate          (to deactivate it)
-5. Installing Django
-   $ pip install django
-6. To start a new Django Project
-   $ django-admin startproject my_project
-   $ cd my_project
-   $ python manage.py runserver
-7. To start an App
-   $ python manage.py startapp myApp
-   $ Navigate to settings.py -> go to Installed Apps and add 'myApp' to it.
-8. Project level 'urls.py'
-   Add this code, 
-  * from django.contrib import admin
-    from django.urls import path, include
-    urlpatterns = [
-        path('admin/', admin.site.urls),
-        path('', include('myApp.urls')),
-    ]
-9. Creating app level 'urls.py'
-Add your code, 
-  * from django.contrib import admin
-    from django.urls import path, include
-    urlpatterns = [
-       // your paths,
-    ]
-10. Place the static and templates folders in 'myApp'
-11. Now write respective codes for 
-models.py, forms.py, views.py, backend.py 
-12. To make changes reflect in your database
-    python manage.py makemigrations
-    python manage.py migrate
-13. Do not forget to link your database in settings.py (default will be SQLite)
+3. Setting up Virtual Environment<br />
+   $ pip install virtualenv      (to install virtual environment)<br />
+   $ virtualenv my_env           (to create your own virtual environment)<br />
+   $ cd my_env<br />
+   $ Scripts\activate            (to activate your virtual environment)<br />
+   (my_env)$ deactivate          (to deactivate it)<br />
+5. Installing Django<br />
+   $ pip install django<br />
+6. To start a new Django Project<br />
+   $ django-admin startproject my_project<br />
+   $ cd my_project<br />
+   $ python manage.py runserver<br />
+7. To start an App<br />
+   $ python manage.py startapp myApp<br />
+   $ Navigate to settings.py -> go to Installed Apps and add 'myApp' to it.<br />
+8. Project level 'urls.py'<br />
+   Add this code, <br />
+  * from django.contrib import admin<br />
+    from django.urls import path, include<br />
+    urlpatterns = [<br />
+        path('admin/', admin.site.urls),<br />
+        path('', include('myApp.urls')),<br />
+    ]<br />
+9. Creating app level 'urls.py'<br />
+Add your code, <br />
+  * from django.contrib import admin<br />
+    from django.urls import path, include<br />
+    urlpatterns = [<br />
+       // your paths,<br />
+    ]<br />
+10. Place the static and templates folders in 'myApp'<br />
+11. Now write respective codes for <br />
+models.py, forms.py, views.py, backend.py <br />
+12. To make changes reflect in your database<br />
+    python manage.py makemigrations<br />
+    python manage.py migrate<br />
+13. Do not forget to link your database in settings.py (default will be SQLite)<br />
