@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BookingForm, UserRegistrationForm, LoginForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from .models import Booking, Employee, Profile
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 def register(request):
     if request.method == 'POST':
@@ -123,3 +124,31 @@ def cancel(request):
             messages.error(request, 'No current order to cancel.')
 
     return render(request, 'myapp/cancellation.html', {'current_booking': current_booking})
+
+def forgot_password(request):
+    if request.method == 'POST':
+        mobile_no = request.POST['mobile_no']
+        try:
+            profile = Profile.objects.get(mobile_no=mobile_no)
+            user = profile.user
+            return redirect('reset_password', user_id=user.id)
+        except Profile.DoesNotExist:
+            return render(request, 'myapp/forgot_password.html', {'error': 'User not found'})
+    return render(request, 'myapp/forgot_password.html')
+
+def reset_password(request, user_id):
+    if request.method == 'POST':
+        new_password = request.POST['new_password']
+        confirm_password = request.POST['confirm_password']
+        if new_password == confirm_password:
+            try:
+                user = User.objects.get(id=user_id)
+                user.set_password(new_password)
+                user.save()
+                update_session_auth_hash(request, user)
+                return render(request, 'myapp/reset_password.html', {'user_id': user_id, 'success': 'Password reset successful!'})
+            except User.DoesNotExist:
+                return render(request, 'myapp/reset_password.html', {'error': 'User not found', 'user_id': user_id})
+        else:
+            return render(request, 'myapp/reset_password.html', {'error': 'Passwords do not match', 'user_id': user_id})
+    return render(request, 'myapp/reset_password.html', {'user_id': user_id})
