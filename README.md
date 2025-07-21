@@ -65,7 +65,21 @@ python manage.py runserver
 
 ## Project Structure
 
-<pre> ```plaintext backend/lpg/ ├── lpg/ # Django project folder (settings.py, urls.py, etc.) │ ├── settings.py │ ├── urls.py │ └── ... ├── myapp/ # Django app │ ├── models.py │ ├── views.py │ ├── urls.py │ ├── templates/ │ └── static/ ├── manage.py ``` </pre>
+```
+  backend/lpg/
+  ├── lpg/            # Django project folder (settings.py, urls.py, etc.)
+  │   ├── settings.py
+  │   ├── urls.py
+  │   └── ...
+  ├── myapp/          # Django app
+  │   ├── models.py
+  │   ├── views.py
+  │   ├── urls.py
+  │   ├── templates/
+  │   └── static/
+  ├── manage.py
+
+```
 ---
 
 ### Note:
