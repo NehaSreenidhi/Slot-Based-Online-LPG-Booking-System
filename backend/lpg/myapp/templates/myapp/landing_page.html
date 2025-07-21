@@ -1,0 +1,233 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Landing Page{% endblock %}</title>
+    <link rel="icon" href="{% static 'myapp/images/img.jpg' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        #grad1 {
+          height: 400px;
+          background-image: linear-gradient(to bottom, rgb(84,180,211), rgba(255,0,0,0));
+        }
+        .content-section {
+            margin-top: 50px; /* Adjust the margin as needed */
+        }
+        .left-content img {
+            display: block;
+            max-width: 100%;
+            height: 50;
+            margin: 0 auto; /* Center the image horizontally */
+        }
+        .right-content {
+            display: flex;
+            align-items: center; /* Center the text vertically */
+            height: 100%; /* Ensure it takes the full height of the column */
+        }
+        .custom-text {
+            font-size: 25px;
+            font-family: "Times New Roman", Times, serif;
+        }
+        .faq-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 30px; /* Space between heading and FAQs */
+        }
+        .faq-card {
+            border-radius: 5px;
+            border: 2px solid #17a2b8; /* Border color */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px; /* Space between each FAQ card */
+        }
+        .faq-card-header {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            padding-right: 40px; /* Space for the marker */
+        }
+        .faq-card-header::after {
+            content: '';
+            border: 1px solid #17a2b8;
+            border-width: 0 1px 1px 0;
+            display: inline-block;
+            padding: 3px;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%) rotate(45deg); /* Rotating the marker to create a V shape */
+        }
+        .faq-card-body {
+            padding: 20px;
+            border-radius: 0 0 15px 15px;
+        }
+        .card-custom {
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card-custom:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .card-book {
+            background-color: #d0f4fa;
+        }
+        .card-cancel {
+            background-color: #ffebee;
+        }
+        .card-show {
+            background-color: #e8f5e9;
+        }
+        .card-title {
+            font-weight: bold;
+        }
+        .btn-custom {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="grad1">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'myapp/images/img.jpg' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                    Slot Based Online LPG Booking System
+                </a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" style="color: white;" href="{% url 'home' %}">Home</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
+                              Services
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="Services">
+                              <a class="dropdown-item" href="{% url 'book' %}">Book</a>
+                              <a class="dropdown-item" href="{% url 'cancel' %}">Cancel</a>
+                              <a class="dropdown-item" href="{% url 'customer_orders' %}">View Orders</a>
+                            </div>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <div id="navbarUserSection" style="display: flex; align-items: center;">
+                        {% if user.is_authenticated %}
+                            <span class="navbar-text" style="color: white; display: flex; align-items: center; margin-right: 10px;">
+                                <i class="fas fa-user" style="margin-right: 5px;"></i> {{ user.username }}
+                            </span>
+                            <a class="btn" style="color: white;" href="{% url 'logout' %}">Logout <i class="fas fa-sign-out-alt"></i></a>
+                        {% else %}
+                            <a class="btn" style="color: white;" href="{% url 'login' %}">Login/Register <i class="fas fa-user"></i></a>
+                        {% endif %}
+                    </div>
+                                      
+                </div>
+            </nav>
+        </div>
+    <div class="container content-section">
+        <div class="row">
+            <div class="col-md-8 left-content">
+                <img src="{% static 'myapp/images/main_img.jpg' %}" alt="Your Image">
+            </div>
+            <div class="col-md-4 right-content">
+                <p class="custom-text">Welcome to Slot Based Online LPG Booking System!<br>Effortlessly book your LPG gas cylinder at your preferred Time Slot.<br>The additional services we provide are - Cancellation and Tracking.</p>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <h2 class="faq-header text-center" style="color: #17a2b8;">Services</h2>
+        <div class="row">
+            <!-- Book Order Card -->
+            <div class="col-md-4 mb-4">
+                <div class="card card-custom card-book">
+                    <div class="card-body">
+                        <h5 class="card-title">Book Order</h5>
+                        <p class="card-text">Easily book your LPG gas cylinder online with just a few clicks. Convenient and fast service available 24/7.</p>
+                        <a href="#" class="btn btn-info btn-custom">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Cancel Order Card -->
+            <div class="col-md-4 mb-4">
+                <div class="card card-custom card-cancel">
+                    <div class="card-body">
+                        <h5 class="card-title">Cancel Order</h5>
+                        <p class="card-text">Need to cancel your booking? You can cancel your LPG gas cylinder order quickly and easily through our system.</p>
+                        <a href="#" class="btn btn-danger btn-custom">Cancel Now</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Show Orders Card -->
+            <div class="col-md-4 mb-4">
+                <div class="card card-custom card-show">
+                    <div class="card-body">
+                        <h5 class="card-title">Show Orders</h5>
+                        <p class="card-text">View all your past and current LPG gas cylinder orders. Keep track of your order history and status.</p>
+                        <a href="#" class="btn btn-success btn-custom">Show Orders</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <h2 class="faq-header text-center" style="color: #17a2b8;">Frequently Asked Questions</h2>
+        <div class="accordion" id="faqAccordion">
+            <!-- FAQ 1 -->
+            <div class="card faq-card">
+                <div class="card-header faq-card-header" id="faqHeading5" data-toggle="collapse" data-target="#faqCollapse5" aria-expanded="false" aria-controls="faqCollapse5">
+                    <h5 class="mb-0">How can I register?</h5>
+                </div>
+                <div id="faqCollapse5" class="collapse" aria-labelledby="faqHeading5" data-parent="#faqAccordion">
+                    <div class="card-body faq-card-body">
+                        Click on login. In the login page you can find register option. By entering your details and clicking on register, youwill be registered.
+                    </div>
+                </div>
+            </div>
+            <!-- FAQ 2 -->
+            <div class="card faq-card">
+                <div class="card-header faq-card-header" id="faqHeading1" data-toggle="collapse" data-target="#faqCollapse1" aria-expanded="false" aria-controls="faqCollapse1">
+                    <h5 class="mb-0">How do I book an LPG gas cylinder?</h5>
+                </div>
+                <div id="faqCollapse1" class="collapse" aria-labelledby="faqHeading1" data-parent="#faqAccordion">
+                    <div class="card-body faq-card-body">
+                        To book an LPG gas cylinder, simply log in to your account on our website, go to the booking in services. After filling out details like preferred slot, date click on book. Your order will be booked.
+                    </div>
+                </div>
+            </div>
+            <!-- FAQ 3 -->
+            <div class="card faq-card">
+                <div class="card-header faq-card-header" id="faqHeading2" data-toggle="collapse" data-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
+                    <h5 class="mb-0">How can I cancel my order?</h5>
+                </div>
+                <div id="faqCollapse2" class="collapse" aria-labelledby="faqHeading2" data-parent="#faqAccordion">
+                    <div class="card-body faq-card-body">
+                        To cancel your order, log in to your account, go to the 'Cancel' in services, active order will be displayed. Click on the cancel button to cancel the order before its delivery.
+                    </div>
+                </div>
+            </div>
+            <!-- FAQ 4 -->
+            <div class="card faq-card">
+                <div class="card-header faq-card-header" id="faqHeading3" data-toggle="collapse" data-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3">
+                    <h5 class="mb-0">How can I view my past orders?</h5>
+                </div>
+                <div id="faqCollapse3" class="collapse" aria-labelledby="faqHeading3" data-parent="#faqAccordion">
+                    <div class="card-body faq-card-body">
+                        To view your past orders, log in to your account and navigate to the 'My Orders' in services. There you will find a list of all your previous orders along with their statuses - booked/ out-for-delivery/ delivered.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

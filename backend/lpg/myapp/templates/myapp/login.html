@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Login Page</title>
+    <link rel="icon" href="{% static 'myapp/images/img.jpg' %}">
+    <style>
+        #grad1 {
+            height: 400px;
+            background-image: linear-gradient(to bottom, rgba(84,180,211), rgba(255,0,0,0));
+        }
+        marquee {
+            color: white; 
+            padding: 10px; 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+        }
+        .back-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #17a2b8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .back-button:hover {
+            background-color: #138496;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div id="grad1">
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <table align="center" cellpadding="10" cellspacing="5">
+                <tr>
+                    <marquee behavior="scroll" direction="left" scrollamount="5">
+                        Enter your mobile number and password to login
+                    </marquee>               
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="text">
+                            <h2 class="text-center" style="color: white;">Customer Login</h2>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ form.mobile_no.label_tag }}</td>
+                    <td>{{ form.mobile_no }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.password.label_tag }}</td>
+                    <td>{{ form.password }}</td>
+                </tr>
+                
+                {% if error %}
+                <tr>
+                    <td colspan="2">
+                        <div class="alert alert-danger">{{ error }}</div>
+                    </td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td><button type="submit" class="btn btn-info">Login</button></td>
+                    <td colspan="2" align="right">
+                        <a href="{% url 'forgot_password' %}" style="color: black; font-size: 1.2em; ">Forgot Password ?</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            Don't have an account?<br>
+                            <a class="btn btn-info" style="color: white;" href="{% url 'register' %}">Register</a>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p> Are you the Admin?<br>
+                        <a class="btn btn-info" style="color: white;" href="{% url 'admin_login' %}">Login as admin</a>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <button class="back-button" onclick="goBack()">Back</button>
+
+    <script>
+        function goBack() {
+            window.location.href = "{% url 'home' %}";
+        }
+    </script>
+</body>
+</html>

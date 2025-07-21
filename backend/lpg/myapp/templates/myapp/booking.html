@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking page</title>
+    <link rel="icon" href="{% static 'myapp/images/img.jpg' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <style>
+        #grad1 {
+            height: 400px;
+            background-image: linear-gradient(to bottom, rgba(84,180,211), rgba(255,0,0,0));
+        }
+        .back-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #17a2b8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .back-button:hover {
+            background-color: #138496;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id="grad1">
+    <form method="post" action="{% url 'book' %}">
+        {% csrf_token %}
+        <table align="center" cellpadding="10" cellspacing="5">
+            <tr>
+                <td><br></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="text">
+                        <h2 class="text-center" style="color: white;">Booking Page</h2>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td> {{ form.name.label_tag }}</label></td>
+                <td> {{ form.name }}</td>
+            </tr>
+            <tr>
+                <td> {{ form.consumer_number.label_tag }}</label></td>
+                <td> {{ form.consumer_number }}</td>
+            </tr>
+            <tr>
+                <td> {{ form.delivery_date.label_tag }}</label></td>
+                <td>{{ form.delivery_date }}</td>
+            </tr>
+            <tr>
+                <td> {{ form.time_slot.label_tag }}</label></td>
+                <td> {{ form.time_slot }}</td>
+            </tr>
+            <tr>
+                <td colspan="2"> 
+                    <button type="submit" class="btn btn-info">Book</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+{% if success %}
+<script>
+    alert("Booking successful! View your booking in orders.");
+</script>
+{% endif %}
+
+<button class="back-button" onclick="goBack()">Back</button>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7HUiB39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+<script>
+    function goBack() {
+        window.location.href = "{% url 'home' %}";
+    }
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const bookingForm = document.getElementById('bookingForm');
+        const deliveryDateInput = document.querySelector('[name="delivery_date"]');
+        
+        // Calculate tomorrow's date
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const tomorrowISO = tomorrow.toISOString().split('T')[0];
+
+        // Set the minimum date for delivery date to tomorrow's date
+        deliveryDateInput.setAttribute('min', tomorrowISO);
+
+        // Add event listener to form submit
+        bookingForm.addEventListener('submit', function(event) {
+            const deliveryDate = new Date(deliveryDateInput.value);
+            if (deliveryDate < tomorrow) {
+                event.preventDefault();
+                alert("The selected date cannot be today or in the past. Please choose a valid delivery date.");
+            }
+        });
+    });
+
+</script>
+</body>
+</html>
